@@ -5,29 +5,27 @@ var cardTwo = "queen";
 var cardThree="king";
 var cardFour="king";*/
 
-var cards = ['queen', 'queen', 'king', 'king'];
+//create card array
+var cards_2= ['queen', 'queen', 'king', 'king'];
+//emtpy array for results
 var cardsInPlay = [];
 
 //link board to element in HTML
-var gameBoard =document.getElementById ("game-board");
+var board =document.getElementById ('game-board');
 var createBoard=function(){
-//counter //
-for (var i = 0; i <= cards.length; i++) {
-//creates a div for each of the cards	
+for (var i = 0; i<cards_2.length; i++) {
+//crete new Div for cards	
 var cardElement = document.createElement ('div');
-//creates class in CSS
-cardElement.className='card';
-//sets data-card as an array element
-cardElement.setAttribute('data-card', cards[i]);
-//runs isTwoCards if clicked
-cardElement.addEventListener ('click',isTwoCards);
-//append the card to the board - this line is casuing problems ('cannot read property append child of null'),
- //but I can't see whats wrong with it?
-gameBoard.appendChild(cardElement);
+//give cards 'type' based on king or queen attribute in array
+cardElement.setAttribute('data-card', cards_2[i]);
+//creates class in CSS//
+cardElement.className="card";
+//turns over cards (accesses isTwoCards Function to add card pictures)
+cardElement.addEventListener('click', isTwoCards);
+//appends cards to board element
+document.querySelector('div').appendChild(cardElement);
 }
 };
-
-
 
 //test if cards are a match
 var isMatch = function (cards){
@@ -41,16 +39,17 @@ alert ("Sorry your cards don't match, better luck next time");
 //checks to see if there are cards in play
 var isTwoCards = function (){
 cardsInPlay.push(this.getAttribute('data-card'));
+//changes picture when a a click occurs
 if (this.getAttribute('data-card') ==='king') {
 	this.innerHTML = "<img src='king.png'/>";
 } else {
 	this.innerHTML = "<img src='queen.png'/>";
 }
-
+//checks number of cards
 if (cardsInPlay.length === 2) {
 	//pass cardsInPlay to isMatch function
 		isMatch(cardsInPlay);
-		//clears cards in play array
+		//clears cards in play array, sets board for new round
 		cardsInPlay = [];
 	}
 };
