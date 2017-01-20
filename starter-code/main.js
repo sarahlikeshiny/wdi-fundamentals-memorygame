@@ -9,24 +9,24 @@ var cards = ['queen', 'queen', 'king', 'king'];
 var cardsInPlay = [];
 
 //link board to element in HTML
-var gameBoard =document.getElementById ('game-board');
+var gameBoard =document.getElementById ("game-board");
 var createBoard=function(){
 //counter //
 for (var i = 0; i <= cards.length; i++) {
 //creates a div for each of the cards	
 var cardElement = document.createElement ('div');
 //creates class in CSS
-cards.className="card";
+cardElement.className='card';
 //sets data-card as an array element
 cardElement.setAttribute('data-card', cards[i]);
 //runs isTwoCards if clicked
-cardElement.addEventListener ('click',isTwoCards)
-//append the card to the board
+cardElement.addEventListener ('click',isTwoCards);
+//append the card to the board - this line is casuing problems ('cannot read property append child of null'),
+ //but I can't see whats wrong with it?
 gameBoard.appendChild(cardElement);
 }
-}
-//calls function to create cards
-createBoard();
+};
+
 
 
 //test if cards are a match
@@ -41,20 +41,19 @@ alert ("Sorry your cards don't match, better luck next time");
 //checks to see if there are cards in play
 var isTwoCards = function (){
 cardsInPlay.push(this.getAttribute('data-card'));
+if (this.getAttribute('data-card') ==='king') {
+	this.innerHTML = "<img src='king.png'/>";
+} else {
+	this.innerHTML = "<img src='queen.png'/>";
 }
-//I think the images go here, but I can't get this bit to work!
-/*
-if (attribute('data-card') ==='king') {
-this.innerHTML = '<img src=king.png alt 'king of clubs'/>
-this.innerHTML = '<img src=queen.png alt 'queen of clubs'/>
-}
-*/
+
 if (cardsInPlay.length === 2) {
 	//pass cardsInPlay to isMatch function
 		isMatch(cardsInPlay);
 		//clears cards in play array
 		cardsInPlay = [];
 	}
+};
 
 //calls function to start game
 createBoard();
@@ -63,7 +62,7 @@ createBoard();
 //var runningTotal = function(isMatch){
 	//for each isMatch run keeps score, up to 10 goes
 	//for (var = i; i =10 i = isMatch)
-}
+
 
 //OLD CODE
 	/* if (cardOne === cardTwo) {
